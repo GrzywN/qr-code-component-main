@@ -1,0 +1,21 @@
+.attribution {
+  position: absolute;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  letter-spacing: 200%;
+  bottom: 0;
+  background-color: var(--clr--dark--blue);
+  width: 100vw;
+  height: 10vh;
+  font-size: 1.5em;
+  text-align: center;
+  color: var(--clr--light-gray);
+  &__a {
+    color: hsl(228, 45%, 44%);
+    text-decoration: none;
+  }
+  &__p {
+    padding: 0;
+  }
+}
