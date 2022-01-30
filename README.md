@@ -55,4 +55,3 @@ Sometimes box-sizing: border-box is worse than content-box.
 - GitHub - [GrzywN (Karol Binkowski) · GitHub](https://github.com/GrzywN)
 - Frontend Mentor - [@grzywN](https://www.frontendmentor.io/profile/GrzywN)
 - Discord - fansik#2808
-  "# qr-code-component-main" 
