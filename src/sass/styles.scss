@@ -1,0 +1,181 @@
+@use 'sass:math';
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
+
+$color-white: hsl(0, 0%, 100%);
+$color-light-gray: hsl(212, 45%, 89%);
+$color-grayish-blue: hsl(220, 15%, 55%);
+$color-dark-blue: hsl(218, 44%, 22%);
+
+$animation-duration: 1s;
+$animation-delay: math.div($animation-duration, 2);
+$animation-timing-function: ease;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.js-loading *,
+.js-loading *:before,
+.js-loading *:after {
+  animation-play-state: paused !important;
+}
+
+body {
+  background-color: $color-light-gray;
+  font-family: 'Outfit', sans-serif;
+}
+
+img {
+  image-rendering: optimizeSpeed;
+}
+
+.container {
+  padding: 1em 1em;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.qr-card {
+  margin-top: 1px;
+  background-color: $color-white;
+  max-width: 20em;
+  min-height: 31.0625em;
+  border-radius: 1.25em;
+  padding: 1em;
+  &__img-container {
+    cursor: pointer;
+    overflow: hidden;
+    width: 17.6875em;
+    height: 17.6875em;
+    border-radius: 0.625em;
+    &:hover > .qr-card__img {
+      transform: scale(1.5);
+    }
+    animation: slideInImage $animation-duration $animation-timing-function;
+    animation-fill-mode: forwards;
+  }
+  &__img {
+    max-width: 80vw;
+    width: 100%;
+    height: auto;
+    transition: transform 300ms $animation-timing-function;
+  }
+  &__body {
+    margin-top: 1.5em;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+  &__heading {
+    color: $color-dark-blue;
+    font-size: 1.375rem;
+    font-weight: 700;
+    letter-spacing: 0px;
+    text-align: center;
+    opacity: 0;
+    animation: slideInFromLeft $animation-duration $animation-timing-function;
+    animation-fill-mode: forwards;
+  }
+  &__paragraph {
+    color: $color-grayish-blue;
+    margin-top: 1rem;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    letter-spacing: 0.19px;
+    text-align: center;
+    opacity: 0;
+    animation: slideInFromLeft $animation-duration $animation-timing-function;
+    animation-delay: $animation-delay;
+    animation-fill-mode: forwards;
+  }
+}
+
+.popup {
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity $animation-duration ease;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 100vh;
+  width: 100%;
+  &__backdrop {
+    position: fixed;
+    background-image: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.75),
+      rgba(0, 0, 0, 0.9)
+    );
+    backdrop-filter: blur(1em);
+    display: grid;
+    place-items: center;
+    width: 100vw;
+    height: 100vh;
+  }
+  &__img-container {
+    border-radius: 1.25em;
+    z-index: 2;
+    max-width: 90vw;
+    border: 1em solid $color-white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%) scale(0);
+    transition: transform $animation-duration $animation-timing-function;
+    transition-delay: $animation-delay;
+    background-color: $color-white;
+  }
+  &__img {
+    border-radius: 0.875em;
+    width: 36em;
+    height: 36em;
+  }
+  &:target {
+    opacity: 1;
+    pointer-events: all;
+    transform: scale(1);
+    > .popup__img-container {
+      transform: translateX(-50%) translateY(-50%) scale(1);
+    }
+  }
+}
+
+@media screen and (min-width: 100em) {
+  html {
+    font-size: clamp(1em, 1em + 1.25vw, 1.25em);
+  }
+}
+
+@media screen and (min-width: 200em) {
+  html {
+    font-size: clamp(1em, 1em + 1vw, 2em);
+  }
+}
+
+@keyframes slideInImage {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-5%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
