@@ -44,19 +44,24 @@ img {
 .qr-card {
   background-color: $color-white;
   max-width: 20em;
+  width: 100%;
   min-height: 31.0625em;
   border-radius: 1.25em;
   padding: 1em;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  &__img-container {
-    cursor: pointer;
-    overflow: hidden;
-    width: 17.6875em;
-    height: 17.6875em;
-    border-radius: 0.625em;
-    &:hover > .qr-card__img {
+  &__img-button {
+    &:hover .qr-card__img,
+    &:focus .qr-card__img {
       transform: scale(1.5);
     }
+  }
+  &__img-container {
+    // For some reason that didn't work, while calcuated manually
+    width: calc(288em / 16);
+    height: calc(288em / 16);
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 0.625em;
     animation: slideInImage $animation-duration $animation-timing-function;
     animation-fill-mode: forwards;
   }
@@ -107,11 +112,7 @@ img {
   width: 100%;
   &__backdrop {
     position: fixed;
-    background-image: linear-gradient(
-      135deg,
-      rgba(0, 0, 0, 0.75),
-      rgba(0, 0, 0, 0.9)
-    );
+    background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.9));
     backdrop-filter: blur(1em);
     display: grid;
     place-items: center;
@@ -133,8 +134,9 @@ img {
   }
   &__img {
     border-radius: 0.875em;
+    max-width: calc(90vw - 2em);
     width: 36em;
-    height: 36em;
+    height: auto;
   }
   &:target {
     opacity: 1;
@@ -142,6 +144,34 @@ img {
     transform: scale(1);
     > .popup__img-container {
       transform: translateX(-50%) translateY(-50%) scale(1);
+    }
+  }
+  &__close-button {
+    position: absolute;
+    right: 2em;
+    top: 2em;
+    width: 2em;
+    height: 2em;
+    opacity: 0.5;
+    transition: opacity calc($animation-duration / 4) $animation-timing-function;
+    &:hover,
+    &:focus {
+      opacity: 1;
+    }
+    &::before,
+    &::after {
+      position: absolute;
+      left: calc(15em / 16);
+      content: ' ';
+      height: calc(33em / 16);
+      width: 0.125em;
+      background-color: $color-white;
+    }
+    &::before {
+      transform: rotate(45deg);
+    }
+    &::after {
+      transform: rotate(-45deg);
     }
   }
 }
